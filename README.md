@@ -1,6 +1,6 @@
 # [yf2.theohtani.com](https://yf2.theohtani.com)
 
-> A better Yahoo Fantasy experience.
+> A better Yahoo Fantasy Sports web experience.
 
 ## Docs
 

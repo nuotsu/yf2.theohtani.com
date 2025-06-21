@@ -1,7 +1,7 @@
 {
 	"name": "Yahoo Fantasy",
 	"short_name": "Fantasy",
-	"description": "A better Yahoo Fantasy experience",
+	"description": "A better Yahoo Fantasy Sports web experience.",
 	"start_url": "/",
 	"display": "standalone",
 	"background_color": "#000000",

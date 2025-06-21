@@ -6,6 +6,9 @@
 	--color-background: var(--color-neutral-100);
 	--color-foreground: var(--color-neutral-900);
 
+	--color-yahoo-purple: #7d2eff; /* #6001d2 */
+	--color-yahoo-purple-dark: #5409b2;
+
 	--spacing-ch: 1ch;
 }
 
@@ -13,13 +16,27 @@
 
 @layer base {
 	:root {
-		/* @media (prefers-color-scheme: dark) {
+		@media (prefers-color-scheme: dark) {
 			--color-background: #000;
 			--color-foreground: #fff;
-		} */
+		}
 	}
 
 	* {
 		min-width: 0;
 	}
+}
+
+@utility action-base {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.5ch 1ch;
+	gap: 0.5ch;
+
+	@apply transition-colors;
+}
+
+@utility action-yahoo {
+	@apply action-base bg-yahoo-purple hover:bg-yahoo-purple-dark text-white;
 }
