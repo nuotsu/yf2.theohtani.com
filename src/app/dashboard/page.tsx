@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { getUserProfile } from '@/lib/yahoo/auth'
 import { FaYahoo } from 'react-icons/fa6'
-import { getUserInfo } from '@/lib/yahoo/auth'
 
 export default async function () {
 	const cookieStore = await cookies()
@@ -11,11 +11,11 @@ export default async function () {
 		redirect('/')
 	}
 
-	const userInfo = await getUserInfo(accessToken)
+	const userInfo = await getUserProfile(accessToken)
 
 	return (
 		<main>
-			<pre>{JSON.stringify(userInfo, null, 2)}</pre>
+			<pre className="overflow-auto">{JSON.stringify(userInfo, null, 2)}</pre>
 
 			<a href="/auth/sign-out" className="action-yahoo">
 				<FaYahoo />
