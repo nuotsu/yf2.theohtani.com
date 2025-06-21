@@ -1,6 +1,6 @@
 export default function () {
 	return (
-		<footer className="p-ch pb-[max(1rem,env(safe-area-inset-bottom))] text-center [&_a]:underline">
+		<footer className="p-ch mt-auto pb-[max(1ch,env(safe-area-inset-bottom))] text-center [&_a]:underline">
 			<p className="text-foreground/50">
 				<small>
 					Built by <a href="https://nuotsu.dev">nuotsu</a>

@@ -22,7 +22,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<ViewTransition>
-				<body className="bg-background text-foreground antialiased">
+				<body className="bg-background text-foreground flex min-h-dvh flex-col antialiased">
 					<Header />
 					{children}
 					<Footer />

@@ -8,6 +8,7 @@
 
 	--color-yahoo-purple: #7d2eff; /* #6001d2 */
 	--color-yahoo-purple-dark: #5409b2;
+	--color-yahoo-purple-light: #a7f;
 
 	--spacing-ch: 1ch;
 	--spacing-lh: 1lh;
@@ -26,6 +27,10 @@
 	* {
 		min-width: 0;
 	}
+}
+
+@utility link {
+	@apply text-yahoo-purple dark:text-yahoo-purple-light hover:underline;
 }
 
 @utility action-base {

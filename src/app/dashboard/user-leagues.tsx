@@ -73,7 +73,7 @@ async function UserLeague({
 				)}
 
 				{!game.is_game_over && (
-					<b className="inline-block shrink-0 bg-green-500 px-[.5ch] text-[7px] text-white uppercase dark:bg-green-600">
+					<b className="inline-block shrink-0 animate-pulse bg-green-500 px-[.5ch] text-[8px] text-white uppercase dark:bg-green-600">
 						Active
 					</b>
 				)}
@@ -82,7 +82,7 @@ async function UserLeague({
 			<div className="gap-x-ch flex flex-wrap @max-md:flex-col @md:items-center">
 				<strong className="line-clamp-1 break-all">{league.name}</strong>
 				<small className="flex gap-x-[.5ch]">
-					<span className="line-clamp-1 break-all">{userTeamInfo.name}</span>
+					<em className="line-clamp-1 break-all">{userTeamInfo.name}</em>
 
 					{rank && (
 						<>
