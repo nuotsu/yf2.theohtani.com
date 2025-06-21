@@ -5,7 +5,9 @@ export default function () {
 				<h1>
 					<strong>YF2</strong> by <strong>TheOhtani.com</strong>
 				</h1>
-				<p className="italic">A better Yahoo Fantasy Sports web experience.</p>
+				<p className="text-sm italic">
+					A better Yahoo Fantasy Sports web experience.
+				</p>
 			</hgroup>
 		</header>
 	)

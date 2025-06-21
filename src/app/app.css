@@ -10,6 +10,7 @@
 	--color-yahoo-purple-dark: #5409b2;
 
 	--spacing-ch: 1ch;
+	--spacing-lh: 1lh;
 }
 
 @custom-variant hover (&:hover);
@@ -28,6 +29,7 @@
 }
 
 @utility action-base {
+	cursor: pointer;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;

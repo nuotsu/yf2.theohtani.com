@@ -1,4 +1,5 @@
 import { dev, DOMAIN } from '@/lib/env'
+import { cookies } from 'next/headers'
 
 export function getAuthUrl({ host }: { host: string }) {
 	const BASE_URL = dev ? host : DOMAIN
@@ -8,12 +9,17 @@ export function getAuthUrl({ host }: { host: string }) {
 	url.searchParams.set('client_id', process.env.YAHOO_CONSUMER_KEY!)
 	url.searchParams.set('redirect_uri', `${BASE_URL}/auth/callback`)
 	url.searchParams.set('response_type', 'code')
-	url.searchParams.set('scope', 'openid profile')
+	// url.searchParams.set('scope', 'openid profile')
 
 	return url.toString()
 }
 
-export async function getUserProfile(accessToken: string) {
+export async function getAccessToken() {
+	const cookieStore = await cookies()
+	return cookieStore.get('yahoo_access_token')?.value
+}
+
+export async function getUserInfo(accessToken: string) {
 	try {
 		const response = await fetch(
 			'https://api.login.yahoo.com/openid/v1/userinfo',
@@ -26,7 +32,7 @@ export async function getUserProfile(accessToken: string) {
 		)
 
 		if (response.ok) {
-			return (await response.json()) as Yahoo.UserProfile
+			return (await response.json()) as Yahoo.UserInfo
 		}
 	} catch (error) {
 		console.error(error)

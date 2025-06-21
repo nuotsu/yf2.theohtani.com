@@ -1,4 +1,5 @@
 import { Geist } from 'next/font/google'
+import { unstable_ViewTransition as ViewTransition } from 'react'
 import Header from '@/ui/header'
 import Footer from '@/ui/footer'
 import './app.css'
@@ -20,11 +21,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className="bg-background text-foreground antialiased">
-				<Header />
-				{children}
-				<Footer />
-			</body>
+			<ViewTransition>
+				<body className="bg-background text-foreground antialiased">
+					<Header />
+					{children}
+					<Footer />
+				</body>
+			</ViewTransition>
 		</html>
 	)
 }

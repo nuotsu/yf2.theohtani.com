@@ -1,26 +1,38 @@
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { getUserProfile } from '@/lib/yahoo/auth'
+import { getAccessToken, getUserInfo } from '@/lib/yahoo/auth'
 import { FaYahoo } from 'react-icons/fa6'
+import UserLeagues from './user-leagues'
 
 export default async function () {
-	const cookieStore = await cookies()
-	const accessToken = cookieStore.get('yahoo_access_token')?.value
+	const accessToken = await getAccessToken()
 
 	if (!accessToken) {
 		redirect('/')
 	}
 
-	const userInfo = await getUserProfile(accessToken)
+	const userInfo = await getUserInfo(accessToken)
 
 	return (
 		<main>
-			<pre className="overflow-auto">{JSON.stringify(userInfo, null, 2)}</pre>
+			<section>
+				<div className="gap-ch flex items-center">
+					<img
+						className="size-8 shrink-0"
+						src={userInfo?.profile_images.image64}
+						alt={userInfo?.name}
+						width={64}
+						height={64}
+						loading="lazy"
+					/>
+					<div>Welcome, {userInfo?.nickname || userInfo?.given_name}</div>
+				</div>
+				<a href="/auth/sign-out" className="action-yahoo">
+					<FaYahoo />
+					Sign Out
+				</a>
+			</section>
 
-			<a href="/auth/sign-out" className="action-yahoo">
-				<FaYahoo />
-				Sign Out
-			</a>
+			<UserLeagues />
 		</main>
 	)
 }
