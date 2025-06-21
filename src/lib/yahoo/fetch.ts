@@ -26,7 +26,7 @@ export async function fetchUserLeagues() {
 
 export async function fetchLeagueTeams(league_key: string) {
 	const data = await fetchFantasy<Fantasy.LeagueTeamsResponse>(
-		`league/${league_key}/teams`,
+		`league/${league_key}/teams;out=stats,standings`,
 	)
 	const [league, { teams }] = data.fantasy_content.league
 	return getPluralItems(teams)

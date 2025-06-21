@@ -51,7 +51,7 @@ declare global {
 		}>
 
 		type LeagueResponse = Response<{
-			league: [LeagueInfo]
+			league: [LeagueInfo, { teams: Plural<{ team: Team }> } | undefined]
 		}>
 
 		type LeagueTeamsResponse = Response<{
