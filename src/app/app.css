@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @theme {
-	--font-sans: var(--font-geist-sans);
+	--font-sans: 'Geist', sans-serif;
 
 	--color-background: var(--color-neutral-100);
 	--color-foreground: var(--color-neutral-900);

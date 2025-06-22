@@ -11,7 +11,7 @@ export async function fetchFantasy<T>(endpoint: string) {
 				Authorization: `Bearer ${accessToken}`,
 			},
 			next: {
-				revalidate: 60, // seconds
+				revalidate: 60 * 60, // seconds
 				tags: ['fantasy', endpoint],
 			},
 		},

@@ -210,18 +210,20 @@ declare global {
 			[],
 			[],
 			{
-				managers: Array<{
-					manager: {
-						manager_id: string
-						nickname: string
-						guid: string
-						image_url: string
-						felo_score: string // number
-						felo_tier: string
-					}
-				}>
+				managers: Array<Manager>
 			},
 		]
+
+		interface Manager {
+			manager: {
+				manager_id: string
+				nickname: string
+				guid: string
+				image_url: string
+				felo_score: string // number
+				felo_tier: string
+			}
+		}
 
 		interface TeamStats {
 			team_stats: {

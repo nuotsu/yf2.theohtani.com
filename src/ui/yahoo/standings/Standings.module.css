@@ -1,0 +1,26 @@
+@property --percentage {
+	syntax: '<percentage>';
+	inherits: true;
+	initial-value: 0%;
+}
+
+.name::after {
+	content: '';
+	position: absolute;
+	inset: auto 0 0;
+	height: 1px;
+	background-image: linear-gradient(
+		to right,
+		transparent,
+		var(--color) var(--percentage),
+		transparent var(--percentage),
+		transparent
+	);
+	animation: percentage 0.8s ease-in-out;
+}
+
+@keyframes percentage {
+	from {
+		--percentage: 0%;
+	}
+}
