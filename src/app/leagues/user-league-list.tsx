@@ -5,7 +5,10 @@ import Loading from '@/ui/loading'
 import UserLeague from './user-league'
 
 export default async function () {
-	const userLeagues = await fetchUserLeagues()
+	const { userLeagues } = await fetchUserLeagues()
+
+	if (!userLeagues)
+		return <div className="text-foreground/50">No leagues found.</div>
 
 	const leagues = userLeagues
 		.reverse()
@@ -21,20 +24,16 @@ export default async function () {
 		})
 
 	return (
-		<section className="@container">
-			<h2>All Leagues</h2>
-
-			<Suspense fallback={<Loading>Loading leagues...</Loading>}>
-				<ul>
-					{leagues.map((league) => (
-						<UserLeague
-							league={league}
-							game={league.game}
-							key={league.league_key}
-						/>
-					))}
-				</ul>
-			</Suspense>
-		</section>
+		<Suspense fallback={<Loading>Loading leagues...</Loading>}>
+			<ul className="@conatiner">
+				{leagues.map((league) => (
+					<UserLeague
+						league={league}
+						game={league.game}
+						key={league.league_key}
+					/>
+				))}
+			</ul>
+		</Suspense>
 	)
 }

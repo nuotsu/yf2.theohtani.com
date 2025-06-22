@@ -1,0 +1,15 @@
+.root li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0 1ch;
+	flex-shrink: 0;
+
+	&:not(:first-child)::before {
+		content: '»';
+	}
+
+	&:has(a):not(:hover) {
+		opacity: 0.5;
+	}
+}

@@ -1,8 +1,7 @@
 import { redirect } from 'next/navigation'
 import { getAccessToken, getUserInfo } from '@/lib/yahoo/auth'
-import UserLeagueList from './user-league-list'
 
-export default async function () {
+export default async function ({ children }: { children: React.ReactNode }) {
 	const accessToken = await getAccessToken()
 
 	if (!accessToken) {
@@ -14,7 +13,7 @@ export default async function () {
 	return (
 		<main>
 			<section>
-				<div className="gap-ch flex items-center">
+				<div className="gap-ch flex items-center justify-center">
 					<img
 						className="size-lh shrink-0 self-start"
 						src={userInfo?.profile_images.image64}
@@ -38,7 +37,7 @@ export default async function () {
 				</div>
 			</section>
 
-			<UserLeagueList />
+			{children}
 		</main>
 	)
 }

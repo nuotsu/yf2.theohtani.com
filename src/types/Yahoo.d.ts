@@ -54,8 +54,8 @@ declare global {
 			league: [LeagueInfo, { teams: Plural<{ team: Team }> } | undefined]
 		}>
 
-		type LeagueTeamsResponse = Response<{
-			league: [LeagueInfo, { teams: Plural<{ team: Team }> }]
+		type LeagueTeamsResponse<Params = []> = Response<{
+			league: [LeagueInfo, { teams: Plural<{ team: Team<Params> }> }]
 		}>
 
 		type TeamResponse = Response<{
@@ -171,7 +171,7 @@ declare global {
 			alternate_start_deadline: string // YYYY-MM-DD
 		}
 
-		type Team = [TeamInfo, TeamStats, TeamStandings]
+		type Team<Params = []> = [TeamInfo, ...Params]
 
 		type TeamInfo = [
 			{ team_key: string },

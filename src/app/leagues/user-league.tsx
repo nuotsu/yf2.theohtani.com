@@ -11,14 +11,18 @@ export default async function UserLeague({
 	league: Flatten<[Fantasy.LeagueInfo]>
 	game: Flatten<Fantasy.Game>
 }) {
-	const teams = await fetchLeagueTeams(league.league_key)
+	const { teams } = await fetchLeagueTeams<[Fantasy.TeamStandings]>(
+		league.league_key,
+		'out=standings',
+	)
+
+	if (!teams) return null
 
 	const userTeam = teams.find(
 		(team) => flatten(team.team[0]).is_owned_by_current_login,
 	)
 	const userTeamInfo = flatten(userTeam?.team[0] ?? [])
-	// const userTeamStats = userTeam?.team[1]
-	const { rank } = userTeam?.team[2].team_standings ?? {}
+	const { rank } = userTeam?.team[1].team_standings ?? {}
 
 	return (
 		<li
@@ -41,11 +45,14 @@ export default async function UserLeague({
 				)}
 			</figure>
 
-			<div className="gap-x-ch flex flex-wrap @max-sm:flex-col @sm:items-center">
+			<div className="gap-x-ch flex flex-wrap @max-md:flex-col @md:items-center">
 				<span className="gap-x-ch flex grow items-center">
-					<Link href="" className="line-clamp-1 font-bold break-all italic">
+					<Link
+						href={`/leagues/${league.league_key}`}
+						className="line-clamp-1 font-bold break-all italic"
+					>
 						{userTeamInfo.name}
-						<span className="absolute inset-0" />
+						<span className="absolute inset-0 z-1" />
 					</Link>
 
 					{rank && (

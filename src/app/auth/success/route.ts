@@ -8,5 +8,5 @@ export async function GET(request: NextRequest) {
 	}
 
 	// Redirect to success page
-	return NextResponse.redirect(new URL('/dashboard', request.url))
+	return NextResponse.redirect(new URL('/leagues', request.url))
 }

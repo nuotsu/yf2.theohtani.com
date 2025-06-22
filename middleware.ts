@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
 	// Check if user is accessing protected routes
-	if (request.nextUrl.pathname.startsWith('/dashboard')) {
+	if (request.nextUrl.pathname.startsWith('/leagues')) {
 		const accessToken = request.cookies.get('yahoo_access_token')?.value
 
 		if (!accessToken) {
@@ -15,5 +15,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-	matcher: ['/dashboard/:path*'],
+	matcher: ['/leagues/:path*'],
 }
