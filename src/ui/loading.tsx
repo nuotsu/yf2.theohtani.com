@@ -7,7 +7,9 @@ export default function ({
 }: React.ComponentProps<'aside'>) {
 	return (
 		<aside className={cn('gap-ch inline-flex items-center', className)}>
-			<VscLoading className="animate-spin" />
+			<span className="size-lh grid place-items-center">
+				<VscLoading className="animate-spin" />
+			</span>
 			{children || 'Loading...'}
 		</aside>
 	)

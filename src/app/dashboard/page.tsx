@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getAccessToken, getUserInfo } from '@/lib/yahoo/auth'
-import UserLeagues from './user-leagues'
+import UserLeagueList from './user-league-list'
 
 export default async function () {
 	const accessToken = await getAccessToken()
@@ -16,26 +16,29 @@ export default async function () {
 			<section>
 				<div className="gap-ch flex items-center">
 					<img
-						className="size-8 shrink-0"
+						className="size-lh shrink-0 self-start"
 						src={userInfo?.profile_images.image64}
 						alt={userInfo?.name}
 						width={64}
 						height={64}
 						loading="lazy"
 					/>
-					<div>
-						Welcome, <b>{userInfo?.nickname || userInfo?.given_name}</b>
-					</div>
 
-					<small>
-						<a href="/auth/sign-out" className="link">
-							Sign Out
-						</a>
-					</small>
+					<div className="gap-x-ch flex flex-wrap items-center">
+						<div>
+							Welcome, <b>{userInfo?.nickname || userInfo?.given_name}</b>
+						</div>
+
+						<small>
+							<a href="/auth/sign-out" className="link">
+								Sign Out
+							</a>
+						</small>
+					</div>
 				</div>
 			</section>
 
-			<UserLeagues />
+			<UserLeagueList />
 		</main>
 	)
 }
