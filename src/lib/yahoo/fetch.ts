@@ -10,6 +10,10 @@ export async function fetchFantasy<T>(endpoint: string) {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 			},
+			next: {
+				revalidate: 60, // seconds
+				tags: ['fantasy', endpoint],
+			},
 		},
 	)
 
@@ -49,4 +53,21 @@ export async function fetchLeagueTeams<Params = []>(
 
 	const [league, { teams }] = data.fantasy_content.league
 	return { data, league, teams: getPluralItems(teams) }
+}
+
+export async function fetchLeagueStandings(league_key: string) {
+	const { data, isError } = await fetchFantasy<
+		Fantasy.LeagueStandingsResponse<[Fantasy.TeamStats, Fantasy.TeamStandings]>
+	>(`league/${league_key}/standings`)
+
+	if (isError || !data) {
+		return { isError }
+	}
+
+	return {
+		data,
+		standings: getPluralItems(
+			data.fantasy_content.league[1].standings[0].teams,
+		),
+	}
 }

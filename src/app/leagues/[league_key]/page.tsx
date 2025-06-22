@@ -1,7 +1,11 @@
 import { fetchLeagueTeams, fetchUserLeagues } from '@/lib/yahoo/fetch'
-import Breadcrumbs from '../breadcrumbs'
-import { flatten } from '@/lib/yahoo/utils'
+import { getUserTeam } from '@/lib/yahoo/utils'
 import { notFound } from 'next/navigation'
+import Breadcrumbs from '../breadcrumbs'
+import { Suspense } from 'react'
+import StandingsNonActive from '@/ui/yahoo/standings/non-active'
+import StandingsActive from '@/ui/yahoo/standings/active'
+import Loading from '@/ui/loading'
 
 export default async function ({
 	params,
@@ -10,23 +14,21 @@ export default async function ({
 }) {
 	const { league_key } = await params
 
-	const { league, teams, isError } = await fetchLeagueTeams(league_key)
-	const { userLeagues } = await fetchUserLeagues()
+	const [{ league, teams }, { userLeagues }] = await Promise.all([
+		fetchLeagueTeams(league_key),
+		fetchUserLeagues(),
+	])
 
-	if (isError || !league || !teams || !userLeagues) {
+	if (!league || !teams || !userLeagues) {
 		notFound()
 	}
 
-	const userTeam = flatten(
-		teams.find(({ team }) => flatten(team[0]).is_owned_by_current_login)
-			?.team[0] ?? [],
-	)
+	const { userTeamInfo } = getUserTeam(teams)
 
-	const { is_game_over } =
-		userLeagues.find(
-			({ game: [, { leagues }] }) =>
-				leagues[0].league[0].league_key === league_key,
-		)?.game[0] ?? {}
+	const userGame = userLeagues.find(
+		({ game: [, { leagues }] }) =>
+			leagues[0].league[0].league_key === league_key,
+	)?.game[0]
 
 	return (
 		<>
@@ -34,15 +36,25 @@ export default async function ({
 				<li className="anim-fade-to-r">
 					{league.name}
 
-					{!is_game_over && (
+					{!userGame?.is_game_over && (
 						<small className="shrink-0 animate-pulse font-bold text-green-500 uppercase">
 							Active
 						</small>
 					)}
 				</li>
 
-				<li className="anim-fade-to-r font-bold">{userTeam.name}</li>
+				<li className="anim-fade-to-r font-bold">{userTeamInfo.name}</li>
 			</Breadcrumbs>
+
+			<section>
+				{userGame?.is_game_over ? (
+					<Suspense fallback={<Loading>Loading standings...</Loading>}>
+						<StandingsNonActive league_key={league_key} />
+					</Suspense>
+				) : (
+					<StandingsActive league_key={league_key} />
+				)}
+			</section>
 		</>
 	)
 }

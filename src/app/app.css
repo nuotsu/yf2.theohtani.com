@@ -61,6 +61,18 @@
 	}
 }
 
+/* utilities */
+
+@utility overflow-fade-r {
+	--offset: 2ch;
+	mask: linear-gradient(
+		to right,
+		black 50%,
+		black calc(100% - var(--offset)),
+		transparent
+	);
+}
+
 /* components */
 
 @utility link {

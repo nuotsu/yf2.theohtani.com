@@ -62,11 +62,14 @@ declare global {
 			team: [TeamInfo]
 		}>
 
-		type Standings = Response<{
-			league: [LeagueInfo, { standings: [{ teams: Plural<{ team: Team }> }] }]
+		type LeagueStandingsResponse<Params = []> = Response<{
+			league: [
+				LeagueInfo,
+				{ standings: [{ teams: Plural<{ team: Team<Params> }> }] },
+			]
 		}>
 
-		type Scoreboard = Response<{
+		type ScoreboardResponse = Response<{
 			league: [
 				LeagueInfo,
 				{
@@ -80,7 +83,7 @@ declare global {
 			]
 		}>
 
-		type StatCategories = Response<{
+		type StatCategoriesResponse = Response<{
 			game: [
 				GameInfo,
 				{
@@ -107,7 +110,7 @@ declare global {
 			team: [TeamInfo, Roster]
 		}>
 
-		type Transactions = Response<{
+		type TransactionsResponse = Response<{
 			league: [
 				LeagueInfo,
 				{

@@ -1,5 +1,5 @@
 import { fetchLeagueTeams } from '@/lib/yahoo/fetch'
-import { Flatten, flatten } from '@/lib/yahoo/utils'
+import { Flatten, getUserTeam } from '@/lib/yahoo/utils'
 import Link from 'next/link'
 import Emoji from '@/ui/yahoo/emoji'
 import { cn, formatOrdinal } from '@/lib/utils'
@@ -18,10 +18,8 @@ export default async function UserLeague({
 
 	if (!teams) return null
 
-	const userTeam = teams.find(
-		(team) => flatten(team.team[0]).is_owned_by_current_login,
-	)
-	const userTeamInfo = flatten(userTeam?.team[0] ?? [])
+	const { userTeam, userTeamInfo } = getUserTeam(teams)
+
 	const { rank } = userTeam?.team[1].team_standings ?? {}
 
 	return (
