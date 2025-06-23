@@ -18,7 +18,7 @@ export default function ({
 
 	return (
 		<label
-			className="not-has-checked:text-foreground/50 m-auto w-full has-checked:font-bold has-[input]:cursor-pointer"
+			className="not-has-checked:text-foreground/50 hover:text-foreground m-auto w-full transition-colors has-checked:font-bold has-[input]:cursor-pointer"
 			data-group={stat_category?.stat.group}
 		>
 			{![60].includes(stat_category?.stat.stat_id!) && (
@@ -30,15 +30,6 @@ export default function ({
 					onClick={() => {
 						if (selectedStatCategory === stat_category?.stat.stat_id) {
 							setSelectedStatCategory(undefined)
-
-							if (typeof document !== 'undefined') {
-								const hideMatchups = document.querySelector(
-									'#hide-matchups',
-								) as HTMLInputElement
-
-								if (hideMatchups && hideMatchups.checked)
-									hideMatchups.checked = false
-							}
 						} else {
 							setSelectedStatCategory(stat_category?.stat.stat_id)
 						}

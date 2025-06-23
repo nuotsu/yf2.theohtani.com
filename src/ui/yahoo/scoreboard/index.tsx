@@ -24,8 +24,6 @@ export default function ({
 					gridTemplateRows: `repeat(${stats.length + 1}, auto)`,
 				}}
 			>
-				<input id="hide-matchups" type="checkbox" hidden />
-
 				<ColumnHeader
 					scoreboard={scoreboard}
 					settings={settings}
