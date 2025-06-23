@@ -69,18 +69,8 @@ declare global {
 			]
 		}>
 
-		type ScoreboardResponse = Response<{
-			league: [
-				LeagueInfo,
-				{
-					scoreboard: {
-						[key: string /* number */]: {
-							matchups: Plural<{ matchup: Matchup }>
-						}
-						week: number
-					}
-				},
-			]
+		type LeagueScoreboardResponse = Response<{
+			league: [LeagueInfo, Scoreboard]
 		}>
 
 		type StatCategoriesResponse = Response<{
@@ -123,6 +113,23 @@ declare global {
 
 		// objects
 
+		type Game = [GameInfo, { leagues: Plural<League> }]
+
+		interface GameInfo {
+			game_key: string
+			game_id: string
+			name: string
+			code: string
+			type: string
+			url: string
+			season: string
+			is_registration_over: 0 | 1
+			is_game_over: 0 | 1
+			is_offseason: 0 | 1
+			is_live_draft_lobby_active: 0 | 1
+			alternate_start_deadline: string // YYYY-MM-DD
+		}
+
 		interface League {
 			league: [LeagueInfo]
 		}
@@ -155,23 +162,6 @@ declare global {
 			is_plus_league: string // number
 			game_code: string
 			season: string // number
-		}
-
-		type Game = [GameInfo, { leagues: Plural<League> }]
-
-		interface GameInfo {
-			game_key: string
-			game_id: string
-			name: string
-			code: string
-			type: string
-			url: string
-			season: string
-			is_registration_over: 0 | 1
-			is_game_over: 0 | 1
-			is_offseason: 0 | 1
-			is_live_draft_lobby_active: 0 | 1
-			alternate_start_deadline: string // YYYY-MM-DD
 		}
 
 		type Team<Params = []> = [TeamInfo, ...Params]
@@ -257,8 +247,17 @@ declare global {
 			}
 		}
 
+		interface Scoreboard {
+			scoreboard: {
+				[key: string /* number */]: {
+					matchups: Plural<{ matchup: Matchup }>
+				}
+				week: number
+			}
+		}
+
 		interface Matchup {
-			'0': { teams: Plural<{ team: Team }> }
+			'0': { teams: Plural<{ team: Team<[Fantasy.TeamStats]> }> }
 			week: string // number
 			week_start: string // YYYY-MM-DD
 			week_end: string // YYYY-MM-DD

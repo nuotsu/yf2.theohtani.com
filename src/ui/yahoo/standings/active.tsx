@@ -10,7 +10,8 @@ export default function ({ league_key }: { league_key: string }) {
 		Fantasy.LeagueStandingsResponse<[Fantasy.TeamStats, Fantasy.TeamStandings]>
 	>(`league/${league_key}/standings`)
 
-	if (isLoading || !data) return <Loading>Loading standings...</Loading>
+	if (isLoading || !data?.fantasy_content)
+		return <Loading>Loading standings...</Loading>
 
 	const standings = getPluralItems(
 		data?.fantasy_content.league[1].standings[0].teams,

@@ -5,6 +5,8 @@ import Breadcrumbs from '../breadcrumbs'
 import { Suspense } from 'react'
 import StandingsNonActive from '@/ui/yahoo/standings/non-active'
 import StandingsActive from '@/ui/yahoo/standings/active'
+import ScoreboardNonActive from '@/ui/yahoo/scoreboard/non-active'
+import ScoreboardActive from '@/ui/yahoo/scoreboard/active'
 import Loading from '@/ui/loading'
 
 export default async function ({
@@ -25,10 +27,11 @@ export default async function ({
 
 	const { userTeamInfo } = getUserTeam(teams)
 
-	const userGame = userLeagues.find(
-		({ game: [, { leagues }] }) =>
-			leagues[0].league[0].league_key === league_key,
-	)?.game[0]
+	const { is_game_over } =
+		userLeagues.find(
+			({ game: [, { leagues }] }) =>
+				leagues[0].league[0].league_key === league_key,
+		)?.game[0] ?? {}
 
 	return (
 		<>
@@ -36,7 +39,7 @@ export default async function ({
 				<li className="anim-fade-to-r">
 					{league.name}
 
-					{!userGame?.is_game_over && (
+					{!is_game_over && (
 						<small className="shrink-0 animate-pulse font-bold text-green-500 uppercase">
 							Active
 						</small>
@@ -47,12 +50,22 @@ export default async function ({
 			</Breadcrumbs>
 
 			<section>
-				{userGame?.is_game_over ? (
+				{is_game_over ? (
 					<Suspense fallback={<Loading>Loading standings...</Loading>}>
 						<StandingsNonActive league_key={league_key} />
 					</Suspense>
 				) : (
 					<StandingsActive league_key={league_key} />
+				)}
+			</section>
+
+			<section className="@container">
+				{is_game_over ? (
+					<Suspense fallback={<Loading>Loading matchups...</Loading>}>
+						<ScoreboardNonActive league_key={league_key} />
+					</Suspense>
+				) : (
+					<ScoreboardActive league_key={league_key} />
 				)}
 			</section>
 		</>

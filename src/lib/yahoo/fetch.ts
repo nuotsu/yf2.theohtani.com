@@ -71,3 +71,16 @@ export async function fetchLeagueStandings(league_key: string) {
 		),
 	}
 }
+
+export async function fetchLeagueScoreboard(league_key: string) {
+	const { data, isError } =
+		await fetchFantasy<Fantasy.LeagueScoreboardResponse>(
+			`league/${league_key}/scoreboard`,
+		)
+
+	if (isError || !data) {
+		return { isError }
+	}
+
+	return { data, scoreboard: data.fantasy_content.league[1] }
+}
