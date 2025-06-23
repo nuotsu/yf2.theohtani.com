@@ -1,4 +1,8 @@
-import { fetchLeagueTeams, fetchUserLeagues } from '@/lib/yahoo/fetch'
+import {
+	fetchLeagueSettings,
+	fetchLeagueTeams,
+	fetchUserLeagues,
+} from '@/lib/yahoo/fetch'
 import { getUserTeam } from '@/lib/yahoo/utils'
 import { notFound } from 'next/navigation'
 import Breadcrumbs from '../breadcrumbs'
@@ -16,12 +20,13 @@ export default async function ({
 }) {
 	const { league_key } = await params
 
-	const [{ league, teams }, { userLeagues }] = await Promise.all([
+	const [{ league, teams }, { userLeagues }, { settings }] = await Promise.all([
 		fetchLeagueTeams(league_key),
 		fetchUserLeagues(),
+		fetchLeagueSettings(league_key),
 	])
 
-	if (!league || !teams || !userLeagues) {
+	if (!league || !teams || !userLeagues || !settings) {
 		notFound()
 	}
 
@@ -59,13 +64,13 @@ export default async function ({
 				)}
 			</section>
 
-			<section className="@container">
+			<section>
 				{is_game_over ? (
 					<Suspense fallback={<Loading>Loading matchups...</Loading>}>
-						<ScoreboardNonActive league_key={league_key} />
+						<ScoreboardNonActive league_key={league_key} settings={settings} />
 					</Suspense>
 				) : (
-					<ScoreboardActive league_key={league_key} />
+					<ScoreboardActive league_key={league_key} settings={settings} />
 				)}
 			</section>
 		</>

@@ -70,7 +70,11 @@ declare global {
 		}>
 
 		type LeagueScoreboardResponse = Response<{
-			league: [LeagueInfo, Scoreboard]
+			league: [LeagueInfo, LeagueScoreboard]
+		}>
+
+		type LeagueSettingsResponse = Response<{
+			league: [LeagueInfo, LeagueSettings]
 		}>
 
 		type StatCategoriesResponse = Response<{
@@ -247,13 +251,63 @@ declare global {
 			}
 		}
 
-		interface Scoreboard {
+		interface LeagueScoreboard {
 			scoreboard: {
 				[key: string /* number */]: {
 					matchups: Plural<{ matchup: Matchup }>
 				}
 				week: number
 			}
+		}
+
+		interface LeagueSettings {
+			settings: [
+				{
+					draft_type: string
+					is_auction_draft: string // number
+					scoring_type: string
+					uses_playoff: string // number
+					has_playoff_consolation_games: boolean
+					playoff_start_week: string // number
+					uses_playoff_reseeding: 0 | 1
+					uses_lock_eliminated_teams: 0 | 1
+					num_playoff_teams: string // number
+					num_playoff_consolation_teams: number
+					has_multiweek_championship: number
+					waiver_type: string
+					waiver_rule: string
+					uses_faab: string // number
+					draft_time: string // number
+					draft_pick_time: string // number
+					post_draft_players: string
+					max_teams: string // number
+					waiver_time: string // number
+					trade_end_date: string // YYYY-MM-DD
+					trade_ratify_type: string
+					trade_reject_time: string // number
+					player_pool: string
+					cant_cut_list: string
+					draft_together: 0 | 1
+					can_trade_draft_picks: string // number
+					sendbird_channel_url: string
+					roster_positions: Array<{
+						roster_position: {
+							position: string
+							count: string // number
+							is_starting_position: 0 | 1
+						}
+					}>
+					stat_categories: StatCategories
+					max_weekly_adds: string // number
+					uses_median_score: boolean
+					league_premium_features: []
+				},
+				{
+					season_type: string
+					min_innings_pitched: string // number
+					week_has_enough_qualifying_days: Record<`${number}`, 0 | 1>
+				},
+			]
 		}
 
 		interface Matchup {
@@ -264,11 +318,45 @@ declare global {
 			status: string
 			is_playoffs: string // number
 			is_consolation: string // number
-			stat_winners: Array<{
-				stat_winner: {
-					stat_id: string // number
-					winner_team_key?: string
-					is_tied?: 0 | 1
+			stat_winners: Array<StatWinner>
+		}
+
+		interface StatWinner {
+			stat_winner: {
+				stat_id: string // number
+				winner_team_key?: string
+				is_tied?: 0 | 1
+			}
+		}
+
+		interface Stat {
+			stat: {
+				stat_id: number
+				enabled?: string // number
+				name: string
+				display_name: string
+				group?: string
+				abbr?: string
+				sort_order: string // number
+				position_type?: string
+				position_types?: Array<{ position_type: string }>
+				stat_position_types?: [
+					{
+						stat_position_type: {
+							position_type: string
+						}
+					},
+				]
+			}
+		}
+
+		interface StatCategories {
+			stats: Array<Stat>
+			groups: Array<{
+				group: {
+					group_name: string
+					group_display_name: string
+					group_abbr: string
 				}
 			}>
 		}

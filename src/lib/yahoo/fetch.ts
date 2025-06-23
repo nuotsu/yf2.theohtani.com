@@ -84,3 +84,15 @@ export async function fetchLeagueScoreboard(league_key: string) {
 
 	return { data, scoreboard: data.fantasy_content.league[1] }
 }
+
+export async function fetchLeagueSettings(league_key: string) {
+	const { data, isError } = await fetchFantasy<Fantasy.LeagueSettingsResponse>(
+		`league/${league_key}/settings`,
+	)
+
+	if (isError || !data) {
+		return { isError }
+	}
+
+	return { data, settings: data.fantasy_content.league[1] }
+}

@@ -26,12 +26,13 @@ export default function ({
 			className={cn(
 				'col-span-full grid grid-cols-subgrid',
 				teamInfo.is_owned_by_current_login &&
-					'dark:bg-foreground/20 bg-foreground/10',
+					'dark:bg-foreground/20 bg-foreground/10 font-bold',
 			)}
 			key={teamInfo.team_key}
 		>
 			<span className="text-center">{rank}</span>
 
+			{/* TODO: backdrop-blur not working... */}
 			<TeamLogo
 				teamInfo={teamInfo}
 				className="size-lh sticky left-0 z-1 backdrop-blur-sm"
@@ -50,7 +51,7 @@ export default function ({
 					} as React.CSSProperties
 				}
 			>
-				<em className="font-bold group-has-[#show-manager:checked]:opacity-0">
+				<em className="group-has-[#show-manager:checked]:opacity-0">
 					{teamInfo.name}
 				</em>
 
@@ -82,10 +83,21 @@ export default function ({
 				htmlFor="show-trades"
 				className="relative text-center tabular-nums"
 			>
-				<span className="group-has-[#show-trades:checked]:opacity-0">
+				<span
+					className={cn(
+						'group-has-[#show-trades:checked]:opacity-0',
+						teamInfo.number_of_moves <= 0 && 'text-foreground/50',
+					)}
+				>
 					{teamInfo.number_of_moves}
 				</span>
-				<span className="absolute inset-0 group-has-[#show-trades:not(:checked)]:hidden">
+
+				<span
+					className={cn(
+						'absolute inset-0 group-has-[#show-trades:not(:checked)]:hidden',
+						teamInfo.number_of_trades <= 0 && 'text-foreground/50',
+					)}
+				>
 					{teamInfo.number_of_trades}
 				</span>
 			</label>

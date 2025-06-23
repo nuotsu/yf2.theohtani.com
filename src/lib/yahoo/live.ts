@@ -5,6 +5,6 @@ const fetcher = (endpoint: string) =>
 
 export function fetchFantasyLive<T>(endpoint: string) {
 	return useSWR<T>(endpoint, fetcher, {
-		refreshInterval: 1000 * 5, // ms
+		refreshInterval: 1000 * 10, // ms
 	})
 }

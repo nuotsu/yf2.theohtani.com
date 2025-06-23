@@ -4,7 +4,13 @@ import { fetchFantasyLive } from '@/lib/yahoo/live'
 import Scoreboard from '.'
 import Loading from '@/ui/loading'
 
-export default function ({ league_key }: { league_key: string }) {
+export default function ({
+	league_key,
+	settings,
+}: {
+	league_key: string
+	settings: Fantasy.LeagueSettings
+}) {
 	const { data, isLoading } =
 		fetchFantasyLive<Fantasy.LeagueScoreboardResponse>(
 			`league/${league_key}/scoreboard`,
@@ -12,5 +18,10 @@ export default function ({ league_key }: { league_key: string }) {
 
 	if (isLoading || !data) return <Loading>Loading matchups...</Loading>
 
-	return <Scoreboard scoreboard={data?.fantasy_content.league[1]} />
+	return (
+		<Scoreboard
+			scoreboard={data?.fantasy_content.league[1]}
+			settings={settings}
+		/>
+	)
 }

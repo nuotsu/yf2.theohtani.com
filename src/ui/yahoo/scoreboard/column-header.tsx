@@ -1,15 +1,20 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import StatCategory from './stat-category'
 
 export default function ({
 	scoreboard,
+	settings,
 	stats,
 }: {
-	scoreboard: Fantasy.Scoreboard
+	scoreboard: Fantasy.LeagueScoreboard
+	settings: Fantasy.LeagueSettings
 	stats: Fantasy.TeamStats['team_stats']['stats']
 }) {
 	const ref = useRef<HTMLDivElement>(null)
+
+	const { stat_categories } = settings.settings[0]
 
 	useEffect(() => {
 		if (!ref.current || typeof document === 'undefined') return
@@ -29,7 +34,7 @@ export default function ({
 	return (
 		<div
 			ref={ref}
-			className="sticky left-0 z-1 grid min-w-max snap-start grid-rows-subgrid text-center backdrop-blur-sm"
+			className="sticky left-0 z-1 order-first grid min-w-max snap-start grid-rows-subgrid text-center backdrop-blur-sm"
 			style={{ gridRow: `span ${stats.length + 1}` }}
 		>
 			<small className="text-foreground/50 m-auto grid leading-none">
@@ -38,9 +43,11 @@ export default function ({
 			</small>
 
 			{stats.map(({ stat }) => (
-				<small className="text-foreground/50 m-auto" key={stat.stat_id}>
-					{stat.stat_id}
-				</small>
+				<StatCategory
+					stat_categories={stat_categories}
+					stat={stat}
+					key={stat.stat_id}
+				/>
 			))}
 		</div>
 	)
