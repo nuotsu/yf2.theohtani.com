@@ -29,6 +29,13 @@ export default function ({
 					(s) => Number(s.stat.stat_id) === selectedStatCategory,
 				)
 
+				// H/AB
+				if (selectedStatCategory === 60) {
+					const aH = Number(aStat?.stat.value.split('/')[1])
+					const bH = Number(bStat?.stat.value.split('/')[1])
+					return bH - aH
+				}
+
 				// sort by lowest
 				if ([26, 27].includes(selectedStatCategory))
 					return Number(aStat?.stat.value) - Number(bStat?.stat.value)

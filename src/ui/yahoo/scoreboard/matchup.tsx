@@ -63,7 +63,8 @@ export default function ({
 					<div
 						className={cn(
 							is_winner && 'bg-green-400/20 text-green-600 dark:text-green-400',
-							[0, '0', '-', '/'].includes(stat.value) && 'text-foreground/50',
+							['-', 0, '0', '0.0', '/', '0/0'].includes(stat.value) &&
+								'text-foreground/50',
 						)}
 						data-stat-id={stat.stat_id}
 						key={stat.stat_id}

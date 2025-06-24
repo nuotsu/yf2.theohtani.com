@@ -1,5 +1,6 @@
 import { flatten } from '@/lib/yahoo/utils'
 import TeamLogo from '@/ui/yahoo/team-logo'
+import Stats from './stats'
 import { cn } from '@/lib/utils'
 import css from './Standing.module.css'
 
@@ -12,25 +13,27 @@ export default function ({
 }) {
 	const [t0, ...t] = team.team
 
-	const [
-		teamInfo,
-		teamStats,
-		{
-			team_standings: { outcome_totals, rank, games_back },
-		},
-	] = [flatten(t0), ...t]
-	const { wins, losses, ties, percentage } = outcome_totals
+	const [teamInfo, teamStats, { team_standings }] = [flatten(t0), ...t]
+	const {
+		rank,
+		outcome_totals: { percentage },
+	} = team_standings
 
 	return (
 		<li
 			className={cn(
 				'col-span-full grid grid-cols-subgrid',
+				'group-has-[#show-projection:checked]:[&_[for="show-projection"]]:bg-amber-400/15',
 				teamInfo.is_owned_by_current_login &&
 					'dark:bg-foreground/20 bg-foreground/10 font-bold',
 			)}
 			key={teamInfo.team_key}
 		>
-			<span className="text-center">{rank}</span>
+			<label htmlFor="show-projection" className="px-[.5ch] text-center">
+				<span className="group-has-[#show-projection:checked]:opacity-0">
+					{rank}
+				</span>
+			</label>
 
 			{/* TODO: backdrop-blur not working... */}
 			<TeamLogo
@@ -40,7 +43,7 @@ export default function ({
 
 			<label
 				htmlFor="show-manager"
-				className={cn(css.name, 'relative')}
+				className={cn(css.name, '*:pl-ch relative *:pr-[.5ch]')}
 				style={
 					{
 						'--color':
@@ -62,26 +65,11 @@ export default function ({
 				</span>
 			</label>
 
-			<span className="text-center tabular-nums">
-				{wins}-{losses}-{ties}
-			</span>
-
-			<span
-				className={cn('text-center tabular-nums', {
-					'text-green-600 dark:text-green-200': Number(percentage) > 0.5,
-					'text-red-600 dark:text-red-200': Number(percentage) < 0.5,
-				})}
-			>
-				{percentage}
-			</span>
-
-			<span className="text-center tabular-nums">
-				{games_back !== '-' ? Number(games_back).toFixed(1) : games_back}
-			</span>
+			<Stats team_key={teamInfo.team_key} team_standings={team_standings} />
 
 			<label
 				htmlFor="show-trades"
-				className="relative text-center tabular-nums"
+				className="relative px-[.5ch] text-center tabular-nums"
 			>
 				<span
 					className={cn(
@@ -91,7 +79,6 @@ export default function ({
 				>
 					{teamInfo.number_of_moves}
 				</span>
-
 				<span
 					className={cn(
 						'absolute inset-0 group-has-[#show-trades:not(:checked)]:hidden',
