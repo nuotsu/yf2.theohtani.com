@@ -1,8 +1,11 @@
+'use client'
+
+import { useStandingsContext } from './context'
 import { flatten } from '@/lib/yahoo/utils'
 import TeamLogo from '@/ui/yahoo/team-logo'
-import Stats from './stats'
 import { cn } from '@/lib/utils'
-import css from './Standing.module.css'
+import css from './standing.module.css'
+import { VscArrowSmallUp, VscArrowSmallDown } from 'react-icons/vsc'
 
 export default function ({
 	team,
@@ -11,13 +14,25 @@ export default function ({
 		team: Fantasy.Team<[Fantasy.TeamStats, Fantasy.TeamStandings]>
 	}
 }) {
-	const [t0, ...t] = team.team
+	const { scoreboard, calculateProjections, getProjectedRank } =
+		useStandingsContext()
 
+	const [t0, ...t] = team.team
 	const [teamInfo, teamStats, { team_standings }] = [flatten(t0), ...t]
+
 	const {
 		rank,
-		outcome_totals: { percentage },
+		games_back,
+		outcome_totals: { wins, losses, ties, percentage },
 	} = team_standings
+
+	const { p_wins, p_losses, p_ties, p_percentage, p_games_back } =
+		calculateProjections?.({
+			team_key: teamInfo.team_key,
+			team_standings,
+		}) ?? {}
+
+	const p_rank = getProjectedRank?.(teamInfo.team_key) || Number(rank)
 
 	return (
 		<li
@@ -29,9 +44,24 @@ export default function ({
 			)}
 			key={teamInfo.team_key}
 		>
-			<label htmlFor="show-projection" className="px-[.5ch] text-center">
+			<label
+				htmlFor="show-projection"
+				className="grid place-items-stretch text-center *:col-span-full *:row-span-full *:min-w-max group-has-[#show-projection:not(:checked)]:px-[.5ch]"
+			>
 				<span className="group-has-[#show-projection:checked]:opacity-0">
 					{rank}
+				</span>
+				<span className="relative inline-block group-has-[#show-projection:not(:checked)]:opacity-0">
+					{p_rank}
+					<span className="absolute inset-0 grid items-center justify-end">
+						{p_rank < Number(rank) ? (
+							<VscArrowSmallUp className="text-green-500" />
+						) : (
+							p_rank > Number(rank) && (
+								<VscArrowSmallDown className="text-red-500" />
+							)
+						)}
+					</span>
 				</span>
 			</label>
 
@@ -43,14 +73,24 @@ export default function ({
 
 			<label
 				htmlFor="show-manager"
-				className={cn(css.name, '*:pl-ch relative *:pr-[.5ch]')}
+				className={cn(
+					css.name,
+					'*:pl-ch relative *:pr-[.5ch]',
+					'[--color:var(--c-color)] group-has-[#show-projection:checked]:[--color:var(--p-color)]',
+					'[--percentage:var(--c-percentage)] group-has-[#show-projection:checked]:[--percentage:var(--p-percentage)]',
+				)}
 				style={
 					{
-						'--color':
+						'--c-color':
 							Number(percentage) > 0.5
 								? 'var(--color-green-600)'
 								: 'var(--color-red-600)',
-						'--percentage': `${Number(percentage) * 100}%`,
+						'--p-color':
+							Number(p_percentage) > 0.5
+								? 'var(--color-green-600)'
+								: 'var(--color-red-600)',
+						'--c-percentage': `${(Number(percentage) * 100).toFixed(1)}%`,
+						'--p-percentage': `${(Number(p_percentage) * 100).toFixed(1)}%`,
 					} as React.CSSProperties
 				}
 			>
@@ -65,7 +105,57 @@ export default function ({
 				</span>
 			</label>
 
-			<Stats team_key={teamInfo.team_key} team_standings={team_standings} />
+			<label
+				htmlFor="show-projection"
+				className="grid place-content-center px-[.5ch] text-center tabular-nums *:col-span-full *:row-span-full *:min-w-max"
+			>
+				<span className="group-has-[#show-projection:checked]:opacity-0">
+					{wins}-{losses}-{ties}
+				</span>
+				{scoreboard && (
+					<span className="group-has-[#show-projection:not(:checked)]:opacity-0">
+						{p_wins}-{p_losses}-{p_ties}
+					</span>
+				)}
+			</label>
+
+			<label
+				htmlFor="show-projection"
+				className="grid place-content-center px-[.5ch] text-center tabular-nums *:col-span-full *:row-span-full *:min-w-max"
+			>
+				<span
+					className={cn(
+						'group-has-[#show-projection:checked]:opacity-0',
+						colorize(percentage),
+					)}
+				>
+					{percentage}
+				</span>
+				{scoreboard && (
+					<span
+						className={cn(
+							'group-not-has-[#show-projection]:hidden group-has-[#show-projection:not(:checked)]:opacity-0',
+							colorize(p_percentage),
+						)}
+					>
+						{p_percentage}
+					</span>
+				)}
+			</label>
+
+			<label
+				htmlFor="show-projection"
+				className="grid px-[.5ch] text-center tabular-nums *:col-span-full *:row-span-full *:min-w-max"
+			>
+				<span className="group-has-[#show-projection:checked]:opacity-0">
+					{formatGamesBack(games_back)}
+				</span>
+				{scoreboard && (
+					<span className="group-not-has-[#show-projection]:hidden group-has-[#show-projection:not(:checked)]:opacity-0">
+						{formatGamesBack(p_games_back)}
+					</span>
+				)}
+			</label>
 
 			<label
 				htmlFor="show-trades"
@@ -90,4 +180,15 @@ export default function ({
 			</label>
 		</li>
 	)
+}
+
+function colorize(percentage?: string) {
+	if (!percentage) return ''
+	if (Number(percentage) > 0.5) return 'text-green-600 dark:text-green-200'
+	if (Number(percentage) < 0.5) return 'text-red-600 dark:text-red-200'
+	return ''
+}
+
+function formatGamesBack(games_back?: string) {
+	return games_back !== '-' ? Number(games_back).toFixed(1) : games_back
 }

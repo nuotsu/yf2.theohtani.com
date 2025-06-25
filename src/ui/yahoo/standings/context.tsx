@@ -11,6 +11,7 @@ type Props = {
 	scoreboard?: Fantasy.LeagueScoreboard
 	matchups?: { matchup: Fantasy.Matchup }[]
 	calculateProjections?: typeof calculateProjections
+	getProjectedRank?: (team_key: string) => number
 }
 
 const StandingsContext = createContext<Props>({})
@@ -59,6 +60,8 @@ export function StandingsProvider({
 						},
 						...props,
 					}),
+				getProjectedRank: (team_key: string) =>
+					all_projections.findIndex((p) => p?.team_key === team_key) + 1,
 				...value,
 			}}
 			children={children}

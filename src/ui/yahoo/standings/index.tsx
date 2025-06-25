@@ -1,4 +1,3 @@
-import { cn } from '@/lib/utils'
 import { StandingsProvider } from './context'
 import Standing from './standing'
 
@@ -17,7 +16,9 @@ export default function ({
 		<StandingsProvider value={{ standings, scoreboard }}>
 			<div className="group overflow-fade-r pr-ch overflow-x-auto whitespace-nowrap">
 				<input id="show-manager" type="checkbox" hidden />
-				{scoreboard && <input id="show-projection" type="checkbox" hidden />}
+				{scoreboard && (
+					<input id="show-projection" type="checkbox" defaultChecked hidden />
+				)}
 				<input id="show-trades" type="checkbox" hidden />
 
 				<ol

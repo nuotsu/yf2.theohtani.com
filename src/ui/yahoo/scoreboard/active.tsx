@@ -20,7 +20,10 @@ export default function ({
 
 	return (
 		<Scoreboard
-			scoreboard={data?.fantasy_content.league[1]}
+			// TODO: error happens here after a while
+			// data.fantasy_content is undefined
+			// (user gets signed out)
+			scoreboard={data?.fantasy_content?.league[1]}
 			settings={settings}
 		/>
 	)
