@@ -18,7 +18,7 @@ export default function ({
 	return (
 		<ScoreboardProvider value={{ matchups }}>
 			<div
-				className="group inline-grid max-w-full snap-x snap-mandatory gap-x-[.5ch] overflow-x-auto"
+				className="group inline-grid max-w-full snap-x snap-mandatory gap-x-[.5ch] gap-y-px overflow-x-auto has-[[name='stat-category']:checked]:gap-x-px"
 				style={{
 					gridTemplateColumns: `auto repeat(${matchups.length * 2}, 1fr)`,
 					gridTemplateRows: `repeat(${stats.length + 1}, auto)`,

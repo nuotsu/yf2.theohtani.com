@@ -24,7 +24,7 @@ export default function ({
 			teamInfo={teamInfo}
 			htmlFor="hide-matchups"
 			className={cn(
-				'grid min-w-max snap-start scroll-ml-(--column-header-width) grid-rows-subgrid border-x border-transparent tabular-nums *:px-[.5ch]',
+				'grid min-w-max snap-start scroll-ml-[calc(var(--column-header-width)+1px)] grid-rows-subgrid border-x border-transparent tabular-nums *:px-[.5ch]',
 				index % 2 === 0
 					? 'border-l-current/30 pl-[.5ch] text-right'
 					: 'text-left',

@@ -22,7 +22,7 @@ export default function ({ league_key }: { league_key: string }) {
 		return <Loading>Loading standings...</Loading>
 
 	if (isLoadingScoreboard || !scoreboardData?.fantasy_content)
-		return <Loading>Loading projections...</Loading>
+		return <Loading>Calculating projections...</Loading>
 
 	return (
 		<Standings

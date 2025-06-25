@@ -29,6 +29,12 @@ export default function ({
 					(s) => Number(s.stat.stat_id) === selectedStatCategory,
 				)
 
+				// TODO: check early in the week
+				// move to end if empty
+				// if (!aStat?.stat.value && !bStat?.stat.value) return 1
+				// if (!aStat?.stat.value) return 1
+				// if (!bStat?.stat.value) return -1
+
 				// H/AB
 				if (selectedStatCategory === 60) {
 					const aH = Number(aStat?.stat.value.split('/')[1])

@@ -1,6 +1,14 @@
+import { getAccessToken } from '@/lib/yahoo/auth'
+import { redirect } from 'next/navigation'
 import SignIn from '@/ui/yahoo/sign-in'
 
-export default function Home() {
+export default async function Home() {
+	const accessToken = await getAccessToken()
+
+	if (accessToken) {
+		redirect('/leagues')
+	}
+
 	return (
 		<main className="p-ch grid place-content-center">
 			<SignIn />
