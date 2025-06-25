@@ -16,9 +16,7 @@ export default function ({
 		<StandingsProvider value={{ standings, scoreboard }}>
 			<div className="group overflow-fade-r pr-ch overflow-x-auto whitespace-nowrap">
 				<input id="show-manager" type="checkbox" hidden />
-				{scoreboard && (
-					<input id="show-projection" type="checkbox" defaultChecked hidden />
-				)}
+				{scoreboard && <input id="show-projection" type="checkbox" hidden />}
 				<input id="show-trades" type="checkbox" hidden />
 
 				<ol
