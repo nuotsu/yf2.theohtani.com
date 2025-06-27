@@ -30,11 +30,7 @@ export async function fetchUserLeagues() {
 	const { data, isError } = await fetchFantasy<Fantasy.UserLeaguesResponse>(
 		'users;use_login=1/games/leagues',
 	)
-
-	if (isError || !data) {
-		return { isError }
-	}
-
+	if (isError || !data) return { isError }
 	const [{ user }] = getPluralItems(data.fantasy_content.users)
 	return { data, userLeagues: getPluralItems(user[1].games) }
 }
@@ -46,11 +42,7 @@ export async function fetchLeagueTeams<Params = []>(
 	const { data, isError } = await fetchFantasy<
 		Fantasy.LeagueTeamsResponse<Params>
 	>(`league/${league_key}/teams;${params}`)
-
-	if (isError || !data) {
-		return { isError }
-	}
-
+	if (isError || !data) return { isError }
 	const [league, { teams }] = data.fantasy_content.league
 	return { data, league, teams: getPluralItems(teams) }
 }
@@ -59,11 +51,7 @@ export async function fetchLeagueStandings(league_key: string) {
 	const { data, isError } = await fetchFantasy<
 		Fantasy.LeagueStandingsResponse<[Fantasy.TeamStats, Fantasy.TeamStandings]>
 	>(`league/${league_key}/standings`)
-
-	if (isError || !data) {
-		return { isError }
-	}
-
+	if (isError || !data) return { isError }
 	return {
 		data,
 		standings: getPluralItems(
@@ -77,11 +65,7 @@ export async function fetchLeagueScoreboard(league_key: string) {
 		await fetchFantasy<Fantasy.LeagueScoreboardResponse>(
 			`league/${league_key}/scoreboard`,
 		)
-
-	if (isError || !data) {
-		return { isError }
-	}
-
+	if (isError || !data) return { isError }
 	return { data, scoreboard: data.fantasy_content.league[1] }
 }
 
@@ -89,10 +73,14 @@ export async function fetchLeagueSettings(league_key: string) {
 	const { data, isError } = await fetchFantasy<Fantasy.LeagueSettingsResponse>(
 		`league/${league_key}/settings`,
 	)
-
-	if (isError || !data) {
-		return { isError }
-	}
-
+	if (isError || !data) return { isError }
 	return { data, settings: data.fantasy_content.league[1] }
+}
+
+export async function fetchFantasyRoster(team_key: string) {
+	const { data, isError } = await fetchFantasy<Fantasy.RosterResponse>(
+		`team/${team_key}/roster`,
+	)
+	if (isError || !data) return { isError }
+	return { data, roster: data.fantasy_content.team }
 }

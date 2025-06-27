@@ -6,10 +6,11 @@ import { ScoreboardProvider } from './context'
 export default function ({
 	scoreboard,
 	settings,
+	children,
 }: {
 	scoreboard?: Fantasy.LeagueScoreboard
 	settings: Fantasy.LeagueSettings
-}) {
+} & React.ComponentProps<'div'>) {
 	if (!scoreboard || !settings) return null
 
 	const matchups = getPluralItems(scoreboard.scoreboard[0].matchups)
@@ -29,9 +30,12 @@ export default function ({
 					settings={settings}
 					stats={stats}
 				/>
+
 				{matchups.map(({ matchup }, key) => (
 					<Matchups matchup={matchup} key={key} />
 				))}
+
+				{children}
 			</div>
 		</ScoreboardProvider>
 	)

@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useScoreboardContext } from './context'
 import { flatten, getPluralItems, type Flatten } from '@/lib/yahoo/utils'
 import { sortStats } from '@/lib/yahoo/sort-stats'
