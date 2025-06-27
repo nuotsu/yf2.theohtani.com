@@ -2,7 +2,8 @@
 
 import { useMemo } from 'react'
 import { useScoreboardContext } from './context'
-import { Flatten, flatten, getPluralItems } from '@/lib/yahoo/utils'
+import { flatten, getPluralItems, type Flatten } from '@/lib/yahoo/utils'
+import { sortStats } from '@/lib/yahoo/sort-stats'
 
 export default function ({
 	teamInfo,
@@ -17,38 +18,7 @@ export default function ({
 
 		return matchups
 			?.flatMap(({ matchup }) => getPluralItems(matchup[0].teams))
-			.sort((a, b) => {
-				const aStats = a.team[1].team_stats.stats
-				const bStats = b.team[1].team_stats.stats
-
-				const aStat = aStats.find(
-					(s) => Number(s.stat.stat_id) === selectedStatCategory,
-				)
-
-				const bStat = bStats.find(
-					(s) => Number(s.stat.stat_id) === selectedStatCategory,
-				)
-
-				// TODO: check early in the week
-				// move to end if empty
-				// if (!aStat?.stat.value && !bStat?.stat.value) return 1
-				// if (!aStat?.stat.value) return 1
-				// if (!bStat?.stat.value) return -1
-
-				// H/AB
-				if (selectedStatCategory === 60) {
-					const aH = Number(aStat?.stat.value.split('/')[1])
-					const bH = Number(bStat?.stat.value.split('/')[1])
-					return bH - aH
-				}
-
-				// sort by lowest
-				if ([26, 27].includes(selectedStatCategory))
-					return Number(aStat?.stat.value) - Number(bStat?.stat.value)
-
-				// sort by highest
-				return Number(bStat?.stat.value) - Number(aStat?.stat.value)
-			})
+			.sort((a, b) => sortStats(a, b, selectedStatCategory))
 			.findIndex((t) => flatten(t.team[0]).team_key === teamInfo.team_key)
 	}, [selectedStatCategory])
 

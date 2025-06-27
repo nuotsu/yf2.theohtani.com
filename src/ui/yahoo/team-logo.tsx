@@ -1,4 +1,4 @@
-import { Flatten } from '@/lib/yahoo/utils'
+import { type Flatten } from '@/lib/yahoo/utils'
 
 export default function ({
 	teamInfo,

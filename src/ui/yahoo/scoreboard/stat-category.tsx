@@ -1,6 +1,7 @@
 'use client'
 
 import { useScoreboardContext } from './context'
+import { cn } from '@/lib/utils'
 
 export default function ({
 	stat_categories,
@@ -18,7 +19,10 @@ export default function ({
 
 	return (
 		<label
-			className="not-has-checked:text-foreground/50 hover:text-foreground m-auto w-full transition-colors has-checked:font-bold has-[input]:cursor-pointer"
+			className={cn(
+				'text-foreground/50 hover:text-foreground m-auto w-full transition-colors has-[input]:cursor-pointer',
+				'has-checked:text-amber-600 has-checked:dark:text-amber-400',
+			)}
 			data-group={stat_category?.stat.group}
 		>
 			<input

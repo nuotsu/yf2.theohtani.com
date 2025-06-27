@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import { StandingsProvider } from './context'
 import Standing from './standing'
 
@@ -26,7 +27,12 @@ export default function ({
 							'min-content 1lh  min-content min-content min-content min-content min-content',
 					}}
 				>
-					<li className="*:text-foreground/50 col-span-full grid grid-cols-subgrid text-center text-[small] *:px-[.5ch] [&_label]:cursor-pointer">
+					<li
+						className={cn(
+							'*:text-foreground/50 col-span-full grid grid-cols-subgrid text-center text-[small] *:px-[.5ch] [&_label]:cursor-pointer',
+							'group-has-[#show-projection:checked]:[&_[for=show-projection]]:text-amber-600 group-has-[#show-projection:checked]:[&_[for=show-projection]]:dark:text-amber-400',
+						)}
+					>
 						<label htmlFor="show-projection">Rank</label>
 						<label htmlFor="show-manager" className="col-span-2">
 							<span className="group-has-[#show-manager:checked]:hidden">

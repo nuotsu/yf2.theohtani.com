@@ -1,5 +1,5 @@
 import { fetchLeagueTeams } from '@/lib/yahoo/fetch'
-import { Flatten, getUserTeam } from '@/lib/yahoo/utils'
+import { getUserTeam, type Flatten } from '@/lib/yahoo/utils'
 import Link from 'next/link'
 import Emoji from '@/ui/yahoo/emoji'
 import { cn, formatOrdinal } from '@/lib/utils'

@@ -3,9 +3,9 @@
 import { useStandingsContext } from './context'
 import { flatten } from '@/lib/yahoo/utils'
 import TeamLogo from '@/ui/yahoo/team-logo'
+import { VscArrowSmallUp, VscArrowSmallDown } from 'react-icons/vsc'
 import { cn } from '@/lib/utils'
 import css from './standing.module.css'
-import { VscArrowSmallUp, VscArrowSmallDown } from 'react-icons/vsc'
 
 export default function ({
 	team,

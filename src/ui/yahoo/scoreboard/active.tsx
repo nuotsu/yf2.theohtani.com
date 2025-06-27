@@ -3,6 +3,7 @@
 import { fetchFantasyLive } from '@/lib/yahoo/live'
 import Scoreboard from '.'
 import Loading from '@/ui/loading'
+import { redirect } from 'next/navigation'
 
 export default function ({
 	league_key,
@@ -18,13 +19,10 @@ export default function ({
 
 	if (isLoading || !data) return <Loading>Loading matchups...</Loading>
 
-	return (
-		<Scoreboard
-			// TODO: error happens here after a while
-			// data.fantasy_content is undefined
-			// (user gets signed out)
-			scoreboard={data?.fantasy_content?.league[1]}
-			settings={settings}
-		/>
-	)
+	const scoreboard = data?.fantasy_content?.league[1]
+
+	// user gets signed out after a while
+	if (!scoreboard) redirect('/')
+
+	return <Scoreboard scoreboard={scoreboard} settings={settings} />
 }

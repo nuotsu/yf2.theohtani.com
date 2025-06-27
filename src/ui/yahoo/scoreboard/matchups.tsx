@@ -1,7 +1,7 @@
 'use client'
 
 import { flatten, getPluralItems } from '@/lib/yahoo/utils'
-import Matchup from './matchup'
+import WeeklyStats from './weekly-stats'
 
 export default function ({ matchup }: { matchup: Fantasy.Matchup }) {
 	const teams = getPluralItems(matchup[0].teams)
@@ -13,7 +13,7 @@ export default function ({ matchup }: { matchup: Fantasy.Matchup }) {
 	return (
 		<>
 			{teams.map((team, key) => (
-				<Matchup
+				<WeeklyStats
 					team={team}
 					is_user_matchup={is_user_matchup}
 					stat_winners={matchup.stat_winners}

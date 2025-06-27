@@ -18,7 +18,7 @@ export default function ({
 	return (
 		<ScoreboardProvider value={{ matchups }}>
 			<div
-				className="group inline-grid max-w-full snap-x snap-mandatory gap-x-[.5ch] gap-y-px overflow-x-auto has-[[name='stat-category']:checked]:gap-x-px"
+				className="group inline-grid max-w-full snap-x snap-mandatory gap-x-[calc(.5ch-1px)] gap-y-px overflow-x-auto py-px has-[[name=stat-category]:checked]:gap-x-px"
 				style={{
 					gridTemplateColumns: `auto repeat(${matchups.length * 2}, 1fr)`,
 					gridTemplateRows: `repeat(${stats.length + 1}, auto)`,
@@ -29,7 +29,6 @@ export default function ({
 					settings={settings}
 					stats={stats}
 				/>
-
 				{matchups.map(({ matchup }, key) => (
 					<Matchups matchup={matchup} key={key} />
 				))}

@@ -1,6 +1,7 @@
 import { flatten } from '@/lib/yahoo/utils'
 import MatchupWrapper from './matchup-wrapper'
 import TeamLogo from '@/ui/yahoo/team-logo'
+import Stat from './stat'
 import { cn } from '@/lib/utils'
 
 export default function ({
@@ -28,8 +29,10 @@ export default function ({
 				index % 2 === 0
 					? 'border-l-current/30 pl-[.5ch] text-right'
 					: 'text-left',
-				'group-has-[[name="stat-category"]:checked]:border-none group-has-[[name="stat-category"]:checked]:pl-0 group-has-[[name="stat-category"]:checked]:text-center',
+				'group-has-[[name=stat-category]:checked]:border-none group-has-[[name=stat-category]:checked]:pl-0 group-has-[[name=stat-category]:checked]:text-center',
 				is_user_matchup && 'order-first',
+				teamInfo.is_owned_by_current_login &&
+					'ring-foreground/30 group-has-[[name=stat-category]:checked]:ring-1',
 			)}
 			style={{ gridRow: `span ${team_stats.stats.length + 1}` }}
 			key={teamInfo.team_key}
@@ -52,27 +55,14 @@ export default function ({
 				<strong>{team_points.total}</strong>
 			</div>
 
-			{team_stats.stats?.map(({ stat }) => {
-				const is_winner = stat_winners.find(
-					(s) =>
-						s.stat_winner.stat_id === stat.stat_id &&
-						s.stat_winner.winner_team_key === teamInfo.team_key,
-				)
-
-				return (
-					<div
-						className={cn(
-							is_winner && 'bg-green-400/20 text-green-600 dark:text-green-400',
-							['-', 0, '0', '0.0', '/', '0/0'].includes(stat.value) &&
-								'text-foreground/50',
-						)}
-						data-stat-id={stat.stat_id}
-						key={stat.stat_id}
-					>
-						{stat.value}
-					</div>
-				)
-			})}
+			{team_stats.stats?.map(({ stat }) => (
+				<Stat
+					stat={stat}
+					stat_winners={stat_winners}
+					teamInfo={teamInfo}
+					key={stat.stat_id}
+				/>
+			))}
 		</MatchupWrapper>
 	)
 }
