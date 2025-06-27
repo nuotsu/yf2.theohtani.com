@@ -4,7 +4,6 @@ import { fetchFantasyLive } from '@/lib/yahoo/live'
 import Scoreboard from '.'
 import Loading from '@/ui/loading'
 import { redirect } from 'next/navigation'
-import RosterListActive from '@/ui/yahoo/roster/active'
 
 export default function ({
 	league_key,
@@ -25,9 +24,5 @@ export default function ({
 
 	if (!scoreboard) redirect('/')
 
-	return (
-		<Scoreboard scoreboard={scoreboard} settings={settings}>
-			<RosterListActive scoreboard={scoreboard} />
-		</Scoreboard>
-	)
+	return <Scoreboard scoreboard={scoreboard} settings={settings} />
 }

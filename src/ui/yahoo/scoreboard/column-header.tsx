@@ -35,7 +35,7 @@ export default function ({
 		<div
 			ref={ref}
 			className="sticky left-0 z-1 order-first grid min-w-max snap-start grid-rows-subgrid text-center backdrop-blur-sm"
-			style={{ gridRow: `span ${stats.length + 1}` }}
+			style={{ gridRow: `span ${stats.length + 2}` }}
 		>
 			<small className="text-foreground/50 m-auto grid leading-none">
 				Week
@@ -49,6 +49,13 @@ export default function ({
 					key={stat.stat_id}
 				/>
 			))}
+
+			<div>
+				<label className="not-has-[:checked]:text-foreground/50 cursor-pointer">
+					<input id="show-rosters" type="checkbox" hidden />
+					<small>Roster</small>
+				</label>
+			</div>
 		</div>
 	)
 }

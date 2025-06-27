@@ -2,6 +2,7 @@ import { flatten } from '@/lib/yahoo/utils'
 import MatchupWrapper from './matchup-wrapper'
 import TeamLogo from '@/ui/yahoo/team-logo'
 import Stat from './stat'
+import Roster from '@/ui/yahoo/roster'
 import { cn } from '@/lib/utils'
 
 export default function ({
@@ -34,7 +35,7 @@ export default function ({
 				teamInfo.is_owned_by_current_login &&
 					'ring-foreground/30 group-has-[[name=stat-category]:checked]:ring-1',
 			)}
-			style={{ gridRow: `span ${team_stats.stats.length + 1}` }}
+			style={{ gridRow: `span ${team_stats.stats.length + 2}` }}
 			key={teamInfo.team_key}
 		>
 			<div
@@ -63,6 +64,8 @@ export default function ({
 					key={stat.stat_id}
 				/>
 			))}
+
+			<Roster team_key={teamInfo.team_key} />
 		</MatchupWrapper>
 	)
 }
