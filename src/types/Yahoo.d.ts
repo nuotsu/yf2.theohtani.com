@@ -184,9 +184,7 @@ declare global {
 					}
 				}>
 			},
-			[],
 			{ waiver_priority: number },
-			[],
 			{ number_of_moves: number },
 			{ number_of_trades: number },
 			{
@@ -196,13 +194,9 @@ declare global {
 					value: string // number
 				}
 			},
-			[],
 			{ league_scoring_type: string },
-			[],
 			{ draft_position: number },
 			{ has_draft_grade: number } | [],
-			[],
-			[],
 			{
 				managers: Array<Manager>
 			},
@@ -375,6 +369,7 @@ declare global {
 			},
 			{ url: string },
 			{ status: string; status_full: string } | [],
+			{ injury_note: string } | [],
 			{ on_disabled_list: 0 | 1 } | [],
 			{ editorial_player_key: string },
 			{ editorial_team_key: string },
@@ -402,10 +397,7 @@ declare global {
 			{ primary_position: string },
 			{ eligible_positions: Array<{ position: string }> },
 			{ eligible_positions_to_add: [] },
-			[],
-			[],
 			{ has_player_notes: 0 | 1 },
-			[],
 			{ player_notes_last_timestamp: number },
 		]
 

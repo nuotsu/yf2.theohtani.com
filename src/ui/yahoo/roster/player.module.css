@@ -1,4 +1,4 @@
-.player[data-position='SP'] {
+.root [data-position='SP'] {
 	&:not(& ~ &) {
 		border-top: 1px solid
 			color-mix(in srgb, var(--color-foreground) 50%, transparent);

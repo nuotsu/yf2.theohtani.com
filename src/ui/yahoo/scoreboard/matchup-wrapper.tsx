@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useScoreboardContext } from './context'
 import { flatten, getPluralItems, type Flatten } from '@/lib/yahoo/utils'
 import { sortStats } from '@/lib/yahoo/sort-stats'
@@ -25,7 +25,11 @@ export default function ({
 	return (
 		<label
 			style={{ ...style, order }}
-			onClick={() => selectedStatCategory && setSelectedStatCategory()}
+			onClick={(e) => {
+				// unselect stat category only if clicking on a stat category
+				const statElem = (e.target as HTMLElement).closest('[data-stat-id]')
+				if (statElem) selectedStatCategory && setSelectedStatCategory()
+			}}
 			{...props}
 		/>
 	)
