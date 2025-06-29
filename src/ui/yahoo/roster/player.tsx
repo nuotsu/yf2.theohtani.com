@@ -4,7 +4,8 @@ import css from './player.module.css'
 
 export default function ({ player }: { player: Fantasy.RosterPlayer }) {
 	const [p0, ...p] = player.player
-	const [{ name, status, status_full, ...playerInfo }, playerData, ...rest] = [
+
+	const [{ name, status, ...playerInfo }, playerData, ...rest] = [
 		flatten(p0),
 		...p,
 	]
@@ -22,6 +23,7 @@ export default function ({ player }: { player: Fantasy.RosterPlayer }) {
 				css.root,
 				'group/player ring-foreground/50 open:bg-background text-sm open:relative open:-ml-[.5ch] open:w-[calc(100%+1ch)] open:ring-2',
 			)}
+			data-position={position}
 		>
 			<summary
 				className={cn(
@@ -37,7 +39,6 @@ export default function ({ player }: { player: Fantasy.RosterPlayer }) {
 						'group-not-open/player:opacity-50': ['BN', 'IL'].includes(position),
 					},
 				)}
-				data-position={position}
 			>
 				<span className="line-clamp-1 grow overflow-hidden break-all">
 					<span className="group-not-open/player:hidden">{name.full}</span>
@@ -68,9 +69,9 @@ export default function ({ player }: { player: Fantasy.RosterPlayer }) {
 					</span>
 				</div>
 
-				{status_full && (
+				{status && (
 					<p className="text-xs text-red-600 dark:text-red-400">
-						{status_full}{' '}
+						{status}{' '}
 						{!!playerInfo?.injury_note && ` (${playerInfo.injury_note})`}
 					</p>
 				)}
