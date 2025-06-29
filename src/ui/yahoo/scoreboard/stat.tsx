@@ -34,6 +34,7 @@ export default function ({
 	return (
 		<div
 			className={cn(
+				'px-[.5ch] tabular-nums',
 				is_winner && 'bg-green-400/20 text-green-600 dark:text-green-400',
 				is_leader && 'text-amber-600 dark:text-amber-400',
 				['-', 0, '0', '0.0', '/', '0/0'].includes(stat.value) &&

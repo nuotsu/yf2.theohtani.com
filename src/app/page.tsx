@@ -10,7 +10,7 @@ export default async function Home() {
 	}
 
 	return (
-		<main className="p-ch grid place-content-center">
+		<main className="px-ch grid place-content-center">
 			<SignIn />
 		</main>
 	)

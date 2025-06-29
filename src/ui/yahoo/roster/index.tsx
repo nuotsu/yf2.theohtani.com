@@ -10,7 +10,7 @@ export default function ({ team_key }: { team_key: string }) {
 		`team/${team_key}/roster`,
 	)
 
-	if (isLoading || !data) return null
+	if (isLoading || !data?.fantasy_content) return null
 
 	const [t0, { roster }] = data?.fantasy_content.team
 
@@ -22,13 +22,11 @@ export default function ({ team_key }: { team_key: string }) {
 			className="text-left group-not-has-[#show-rosters:checked]:hidden"
 			data-roster={teamInfo.team_key}
 		>
-			<TeamLogo teamInfo={teamInfo} className="size-lh mx-auto" />
+			<TeamLogo teamInfo={teamInfo} className="size-lh mx-auto my-[.5ch]" />
 
-			<ul>
-				{players.map((player, key) => (
-					<Player player={player} key={key} />
-				))}
-			</ul>
+			{players.map((player, key) => (
+				<Player player={player} key={key} />
+			))}
 		</div>
 	)
 }

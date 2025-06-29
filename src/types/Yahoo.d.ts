@@ -429,14 +429,16 @@ declare global {
 		interface RosterPlayer {
 			player:
 				| [PlayerInfo, RosterPlayerData]
-				| [PlayerInfo, RosterPlayerData, { is_editable: 0 | 1 }]
+				| [PlayerInfo, RosterPlayerData, RosterPlayerIsEditable]
 				| [
 						PlayerInfo,
 						RosterPlayerData,
 						RosterPlayerStarting,
-						{ is_editable: 0 | 1 },
-				  ]
+						RosterPlayerIsEditable,
+				  ] // if is_owned_by_current_login
 		}
+
+		type RosterPlayerIsEditable = { is_editable: 0 | 1 }
 
 		interface RosterPlayerData {
 			selected_position: [

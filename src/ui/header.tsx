@@ -1,6 +1,6 @@
 export default function () {
 	return (
-		<header className="text-center">
+		<header className="p-ch text-center">
 			<hgroup>
 				<h1>
 					<strong>YF2</strong> by <strong>TheOhtani.com</strong>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import StatCategory from './stat-category'
+import { dev } from '@/lib/env'
 
 export default function ({
 	scoreboard,
@@ -52,7 +53,12 @@ export default function ({
 
 			<div>
 				<label className="not-has-[:checked]:text-foreground/50 cursor-pointer">
-					<input id="show-rosters" type="checkbox" hidden />
+					<input
+						id="show-rosters"
+						type="checkbox"
+						hidden
+						defaultChecked={dev}
+					/>
 					<small>Roster</small>
 				</label>
 			</div>

@@ -26,7 +26,7 @@ export default function ({
 			teamInfo={teamInfo}
 			htmlFor="hide-matchups"
 			className={cn(
-				'grid min-w-max snap-start scroll-ml-[calc(var(--column-header-width)+1px)] grid-rows-subgrid border-x border-transparent tabular-nums *:px-[.5ch]',
+				'grid min-w-max snap-start scroll-ml-[calc(var(--column-header-width)+1px)] grid-rows-subgrid border-x border-transparent group-has-[#show-rosters:checked]:w-[7ch] group-has-[#show-rosters:checked]:min-w-[10ch]',
 				index % 2 === 0
 					? 'border-l-current/30 pl-[.5ch] text-right'
 					: 'text-left',
@@ -35,12 +35,14 @@ export default function ({
 				teamInfo.is_owned_by_current_login &&
 					'ring-foreground/30 group-has-[[name=stat-category]:checked]:ring-1',
 			)}
-			style={{ gridRow: `span ${team_stats.stats.length + 2}` }}
+			style={{
+				gridRow: `span ${team_stats.stats.length + 3}`,
+			}}
 			key={teamInfo.team_key}
 		>
 			<div
 				className={cn(
-					'pt-[.5ch]',
+					'p-[.5ch] pb-0',
 					teamInfo.is_owned_by_current_login &&
 						'dark:bg-foreground/20 bg-foreground/10',
 				)}
@@ -53,7 +55,7 @@ export default function ({
 					teamInfo={teamInfo}
 				/>
 
-				<strong>{team_points.total}</strong>
+				<strong className="tabular-nums">{team_points.total}</strong>
 			</div>
 
 			{team_stats.stats?.map(({ stat }) => (
