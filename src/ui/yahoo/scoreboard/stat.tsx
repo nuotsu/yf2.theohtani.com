@@ -2,8 +2,8 @@
 
 import { useScoreboardContext } from './context'
 import { sortStats } from '@/lib/yahoo/sort-stats'
+import { getPluralItems, type Flatten } from '@/lib/yahoo/utils'
 import { cn } from '@/lib/utils'
-import { flatten, getPluralItems, type Flatten } from '@/lib/yahoo/utils'
 
 export default function ({
 	stat,
@@ -29,7 +29,10 @@ export default function ({
 		?.flatMap(({ matchup }) => getPluralItems(matchup[0].teams))
 		.sort((a, b) => sortStats(a, b, stat.stat_id))[0] ?? { team: [] }
 
-	const is_leader = flatten(leader?.team[0]!).team_key === teamInfo.team_key
+	const leader_stat = leader.team[1]?.team_stats.stats.find(
+		(stats) => stats.stat.stat_id === stat.stat_id,
+	)?.stat.value
+	const is_leader = leader_stat === stat.value
 
 	return (
 		<div

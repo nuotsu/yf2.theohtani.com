@@ -13,11 +13,10 @@ export function sortStats(a: Team, b: Team, target_stat_id: number | string) {
 		(s) => Number(s.stat.stat_id) === stat_id,
 	)
 
-	// TODO: check early in the week
 	// move to end if empty
-	// if (!aStat?.stat.value && !bStat?.stat.value) return 1
-	// if (!aStat?.stat.value) return 1
-	// if (!bStat?.stat.value) return -1
+	if (!aStat?.stat.value && !bStat?.stat.value) return 1
+	if (!aStat?.stat.value) return 1
+	if (!bStat?.stat.value) return -1
 
 	// H/AB
 	if (stat_id === 60) {
