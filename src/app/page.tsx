@@ -1,7 +1,7 @@
 import { getAccessToken } from '@/lib/yahoo/auth'
 import { redirect } from 'next/navigation'
 import SignIn from '@/ui/yahoo/sign-in'
-import { version } from '@@/package.json'
+import pkg from '@@/package.json'
 
 export default async function Home() {
 	const accessToken = await getAccessToken()
@@ -15,7 +15,7 @@ export default async function Home() {
 			<SignIn />
 
 			<small className="text-foreground/50 text-[x-small]">
-				Version {version}
+				Version {pkg.version}
 			</small>
 		</main>
 	)

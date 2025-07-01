@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import StatCategory from './stat-category'
 import { dev } from '@/lib/env'
+import { useQueryState } from 'nuqs'
 
 export default function ({
 	scoreboard,
@@ -13,6 +14,7 @@ export default function ({
 	settings: Fantasy.LeagueSettings
 	stats: Fantasy.TeamStats['team_stats']['stats']
 }) {
+	const [weekQuery] = useQueryState('week')
 	const ref = useRef<HTMLDivElement>(null)
 
 	const { stat_categories } = settings.settings[0]
@@ -40,7 +42,7 @@ export default function ({
 		>
 			<small className="text-foreground/50 m-auto grid leading-none">
 				Week
-				<span>{scoreboard.scoreboard.week}</span>
+				<span>{weekQuery ?? scoreboard.scoreboard.week}</span>
 			</small>
 
 			{stats.map(({ stat }) => (

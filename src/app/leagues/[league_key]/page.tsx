@@ -6,19 +6,23 @@ import {
 import { getUserTeam } from '@/lib/yahoo/utils'
 import { notFound } from 'next/navigation'
 import Breadcrumbs from '../breadcrumbs'
+import SelectWeek from '@/ui/yahoo/select-week'
 import { Suspense } from 'react'
+import Loading from '@/ui/loading'
 import StandingsNonActive from '@/ui/yahoo/standings/non-active'
 import StandingsActive from '@/ui/yahoo/standings/active'
 import ScoreboardNonActive from '@/ui/yahoo/scoreboard/non-active'
 import ScoreboardActive from '@/ui/yahoo/scoreboard/active'
-import Loading from '@/ui/loading'
 
 export default async function ({
 	params,
+	searchParams,
 }: {
 	params: Promise<{ league_key: string }>
+	searchParams: Promise<{ week: string }>
 }) {
 	const { league_key } = await params
+	const { week } = await searchParams
 
 	const [{ league, teams }, { userLeagues }, { settings }] = await Promise.all([
 		fetchLeagueTeams(league_key),
@@ -51,7 +55,15 @@ export default async function ({
 					)}
 				</li>
 
-				<li className="anim-fade-to-r font-bold">{userTeamInfo.name}</li>
+				<li className="anim-fade-to-r">{userTeamInfo.name}</li>
+
+				<li className="anim-fade-to-r bg-background overflow-fade-l sticky right-0 -ml-[1.5ch] pl-[1.5ch] empty:hidden">
+					<SelectWeek
+						currentWeek={league.current_week}
+						settings={settings}
+						refreshOnChange={!!is_game_over}
+					/>
+				</li>
 			</Breadcrumbs>
 
 			<section>
@@ -67,7 +79,11 @@ export default async function ({
 			<section>
 				{is_game_over ? (
 					<Suspense fallback={<Loading>Loading matchups...</Loading>}>
-						<ScoreboardNonActive league_key={league_key} settings={settings} />
+						<ScoreboardNonActive
+							league_key={league_key}
+							settings={settings}
+							week={week}
+						/>
 					</Suspense>
 				) : (
 					<ScoreboardActive league_key={league_key} settings={settings} />

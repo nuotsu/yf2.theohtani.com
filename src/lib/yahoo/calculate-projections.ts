@@ -58,12 +58,9 @@ export function calculateProjections({
 	]
 
 	// Percentage = (Wins + Ties/2) / (Wins + Losses + Ties)
-	const p_percentage = (
+	const p_percentage =
 		(Number(p_wins) + Number(p_ties) / 2) /
 		(Number(p_wins) + Number(p_losses) + Number(p_ties))
-	)
-		.toFixed(3)
-		.substring(1)
 
 	return {
 		team_key,
@@ -71,6 +68,7 @@ export function calculateProjections({
 		p_losses,
 		p_ties,
 		p_percentage,
+		p_percentage_formatted: p_percentage?.toFixed(3).substring(1),
 		...(leader
 			? calculateGamesBack({
 					leader,

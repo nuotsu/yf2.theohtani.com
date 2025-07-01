@@ -1,9 +1,9 @@
 'use client'
 
-import Standings from '.'
-import Loading from '@/ui/loading'
 import { fetchFantasyLive } from '@/lib/yahoo/live'
 import { getPluralItems } from '@/lib/yahoo/utils'
+import Loading from '@/ui/loading'
+import Standings from '.'
 
 export default function ({ league_key }: { league_key: string }) {
 	const { data: standingsData, isLoading: isLoadingStandings } =

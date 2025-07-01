@@ -11,7 +11,7 @@ export default async function ({ children }: { children: React.ReactNode }) {
 	const userInfo = await getUserInfo(accessToken)
 
 	return (
-		<main>
+		<main className="gap-ch grid">
 			<section>
 				<div className="gap-ch flex items-center justify-center">
 					<img

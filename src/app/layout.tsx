@@ -1,5 +1,6 @@
 import { Geist } from 'next/font/google'
 import { unstable_ViewTransition as ViewTransition } from 'react'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import Header from '@/ui/header'
 import Footer from '@/ui/footer'
 import './app.css'
@@ -23,9 +24,11 @@ export default function RootLayout({
 		<html lang="en">
 			<ViewTransition>
 				<body className="bg-background text-foreground flex min-h-dvh flex-col antialiased">
-					<Header />
-					{children}
-					<Footer />
+					<NuqsAdapter>
+						<Header />
+						{children}
+						<Footer />
+					</NuqsAdapter>
 				</body>
 			</ViewTransition>
 		</html>

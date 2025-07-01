@@ -26,7 +26,14 @@ export default function ({
 		outcome_totals: { wins, losses, ties, percentage },
 	} = team_standings
 
-	const { p_wins, p_losses, p_ties, p_percentage, p_games_back } =
+	const {
+		p_wins,
+		p_losses,
+		p_ties,
+		p_percentage,
+		p_percentage_formatted,
+		p_games_back,
+	} =
 		calculateProjections?.({
 			team_key: teamInfo.team_key,
 			team_standings,
@@ -135,10 +142,10 @@ export default function ({
 					<span
 						className={cn(
 							'group-not-has-[#show-projection]:hidden group-has-[#show-projection:not(:checked)]:opacity-0',
-							colorize(p_percentage),
+							colorize(p_percentage_formatted),
 						)}
 					>
-						{p_percentage}
+						{p_percentage_formatted}
 					</span>
 				)}
 			</label>

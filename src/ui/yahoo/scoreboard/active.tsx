@@ -4,6 +4,7 @@ import { fetchFantasyLive } from '@/lib/yahoo/live'
 import Scoreboard from '.'
 import Loading from '@/ui/loading'
 import { redirect } from 'next/navigation'
+import { useQueryState } from 'nuqs'
 
 export default function ({
 	league_key,
@@ -12,9 +13,11 @@ export default function ({
 	league_key: string
 	settings: Fantasy.LeagueSettings
 }) {
+	const [weekQuery] = useQueryState('week')
+
 	const { data, isLoading } =
 		fetchFantasyLive<Fantasy.LeagueScoreboardResponse>(
-			`league/${league_key}/scoreboard`,
+			`league/${league_key}/scoreboard;${weekQuery ? `week=${weekQuery}` : ''}`,
 		)
 
 	if (isLoading) return <Loading>Loading matchups...</Loading>

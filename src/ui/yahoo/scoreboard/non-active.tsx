@@ -5,11 +5,16 @@ import Scoreboard from '.'
 export default async function ({
 	league_key,
 	settings,
+	week,
 }: {
 	league_key: string
 	settings: Fantasy.LeagueSettings
+	week?: string
 }) {
-	const { scoreboard } = await fetchLeagueScoreboard(league_key)
+	const { scoreboard } = await fetchLeagueScoreboard(
+		league_key,
+		week && `week=${week}`,
+	)
 
 	if (!scoreboard) redirect('/')
 

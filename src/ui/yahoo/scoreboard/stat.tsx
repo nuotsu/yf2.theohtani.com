@@ -14,12 +14,12 @@ export default function ({
 		stat_id: string
 		value: string
 	}
-	stat_winners: Fantasy.StatWinner[]
+	stat_winners?: Fantasy.StatWinner[]
 	teamInfo: Flatten<Fantasy.TeamInfo>
 }) {
 	const { matchups } = useScoreboardContext()
 
-	const is_winner = stat_winners.find(
+	const is_winner = stat_winners?.find(
 		(s) =>
 			s.stat_winner.stat_id === stat.stat_id &&
 			s.stat_winner.winner_team_key === teamInfo.team_key,

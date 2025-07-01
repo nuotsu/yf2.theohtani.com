@@ -5,7 +5,7 @@
 	gap: 0 1ch;
 	flex-shrink: 0;
 
-	&:not(:first-child)::before {
+	&:not(:last-child)::after {
 		content: '»';
 	}
 

@@ -3,6 +3,8 @@
 import { createContext, useContext, useState } from 'react'
 
 type OptionalProps = {
+	scoreboard?: Fantasy.LeagueScoreboard
+	settings?: Fantasy.LeagueSettings
 	matchups?: {
 		matchup: Fantasy.Matchup
 	}[]

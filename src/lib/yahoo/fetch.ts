@@ -1,7 +1,7 @@
 import { getAccessToken } from './auth'
 import { getPluralItems } from './utils'
 
-export async function fetchFantasy<T>(endpoint: string) {
+export async function fetchFantasy<T>(endpoint: string, tags: string[] = []) {
 	const accessToken = await getAccessToken()
 
 	const res = await fetch(
@@ -12,7 +12,7 @@ export async function fetchFantasy<T>(endpoint: string) {
 			},
 			next: {
 				revalidate: 60 * 60, // seconds
-				tags: ['fantasy', endpoint],
+				tags: ['fantasy', ...tags],
 			},
 		},
 	)
@@ -37,7 +37,7 @@ export async function fetchUserLeagues() {
 
 export async function fetchLeagueTeams<Params = []>(
 	league_key: string,
-	params?: string,
+	params: string = '',
 ) {
 	const { data, isError } = await fetchFantasy<
 		Fantasy.LeagueTeamsResponse<Params>
@@ -60,10 +60,14 @@ export async function fetchLeagueStandings(league_key: string) {
 	}
 }
 
-export async function fetchLeagueScoreboard(league_key: string) {
+export async function fetchLeagueScoreboard(
+	league_key: string,
+	params: string = '',
+) {
 	const { data, isError } =
 		await fetchFantasy<Fantasy.LeagueScoreboardResponse>(
-			`league/${league_key}/scoreboard`,
+			`league/${league_key}/scoreboard;${params}`,
+			['scoreboard'],
 		)
 	if (isError || !data) return { isError }
 	return { data, scoreboard: data.fantasy_content.league[1] }
